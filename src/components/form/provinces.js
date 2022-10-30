@@ -34,15 +34,17 @@ class Provinces extends React.Component {
 
     render() {
         return (
-            <div className="input-group mb-3">
-                <span className="input-group-text" id="basic-addon1">Województwo</span>
-                <select className='form-select' onChange={this.handleChange.bind(this)} onClick={this.handleClick.bind(this)}>
-                    <option value="" style={{ display: "none" }}></option>
-                    {this.state.provinces.map((province, i) => (
-                        <option key={i} value={province}>{province}</option>
-                    ))}
-                </select>
-            </div>
+            <>
+                <span className="inputtext" id="basic-addon1">Województwo</span>
+                <div className="input-group mb-3 py-2">
+                    <select className='form-select' onChange={this.handleChange.bind(this)} onClick={this.handleClick.bind(this)}>
+                        <option value="" style={{ display: "none" }}></option>
+                        {this.state.provinces.map((province, i) => (
+                            <option key={i} value={province}>{province}</option>
+                        ))}
+                    </select>
+                </div>
+            </>
         )
     }
 
