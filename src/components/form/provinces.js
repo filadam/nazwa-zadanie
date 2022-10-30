@@ -1,4 +1,6 @@
 import React from 'react';
+import Form from 'react-bootstrap/Form';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 class Provinces extends React.Component {
     state = {
@@ -35,15 +37,24 @@ class Provinces extends React.Component {
     render() {
         return (
             <>
-                <span className="inputtext" id="basic-addon1">Województwo</span>
-                <div className="input-group mb-3 py-2">
-                    <select className='form-select' onChange={this.handleChange.bind(this)} onClick={this.handleClick.bind(this)}>
-                        <option value="" style={{ display: "none" }}></option>
-                        {this.state.provinces.map((province, i) => (
-                            <option key={i} value={province}>{province}</option>
-                        ))}
-                    </select>
-                </div>
+                <Form.Group className="mb-3" controlId="formBasicPhone">
+                    <FloatingLabel
+                        controlId="floatingInput"
+                        label="Województwo"
+                        className="mb-3"
+                    >
+                        <Form.Select
+                            onChange={this.handleChange.bind(this)}
+                            onClick={this.handleClick.bind(this)}
+                            required
+                        >
+                            <option value="" style={{ display: "none" }}></option>
+                            {this.state.provinces.map((province, i) => (
+                                <option key={i} value={province}>{province}</option>
+                            ))}
+                        </Form.Select>
+                    </FloatingLabel>
+                </Form.Group>
             </>
         )
     }

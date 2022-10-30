@@ -1,11 +1,11 @@
 import './App.css';
 
-import Form from '../src/components/form/form'
+import FormPage from '../src/components/form/form'
 
 function App() {
   return (
     <>
-      <Form />
+      <FormPage />
     </>
   )
 }
