@@ -104,8 +104,9 @@ class FormPage extends React.Component {
         }
         return (
             <div className='d-flex justify-content-center align-items-center h-100'>
-                <div>
-
+                <div className="form-wrapper">
+                    <h1>Siemanko!</h1>
+                    <p>Oto formularz rejestracyjny zrobiony na potrzeby zadania technicznego dla nazwa.pl!</p>
                     <Form className='d-flex flex-column form' noValidate validated={this.state.validated} onSubmit={this.handleSubmit.bind(this)}>
                         <Select
                             sendSelected={this.selectedData = (val) => { this.setState({ selected: val, pesel: '', nip: '' }) }}
