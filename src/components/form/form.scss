@@ -1,0 +1,12 @@
+@import '../../styles/variables';
+
+.form {
+    font-size: $base-font-size / 1.5;
+    font-weight: $fw-bold;
+
+    .select {
+        color: $font-color-primary;
+    }
+
+
+}

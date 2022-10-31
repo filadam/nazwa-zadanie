@@ -17,7 +17,7 @@ class Select extends React.Component {
 
     render() {
         return (
-            <div className="d-flex flex-row py-2">
+            <div className="d-flex flex-row py-2 select">
                 <div className="form-check form-check-inline">
                     <input
                         className="form-check-input"

@@ -1,4 +1,5 @@
 import React from "react";
+import './form.scss';
 import Provinces from "./provinces";
 import Select from "./select"
 import ModalWindow from "./modal"
@@ -6,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import 'react-phone-number-input/style.css'
+import { postalCodeAutoFormat } from './utils/index'
 
 class FormPage extends React.Component {
 
@@ -18,7 +20,6 @@ class FormPage extends React.Component {
         zip: '',
         value: '',
         phone: '',
-        phone2: '',
         email: '',
         pesel: '',
         nip: '',
@@ -27,12 +28,45 @@ class FormPage extends React.Component {
         validated: false,
     }
 
-    handleChange(evt) {
-        const value = evt.target.value;
+    handleErase() {
+        delete this.state.value
         this.setState({
-            ...this.state,
-            [evt.target.name]: value
+            selected: 'option1',
+            name: '',
+            street: '',
+            number: '',
+            place: '',
+            zip: '',
+            value: '',
+            phone: '',
+            email: '',
+            pesel: '',
+            nip: '',
+            clicked: false,
+            show: false,
+            validated: false,
         })
+        console.log(this.state)
+    }
+
+    handleChange(event) {
+        const pushToState = (value) => {
+            this.setState({
+                ...this.state,
+                [event.target.name]: value
+            })
+        }
+        switch (event.target.name) {
+            case "zip":
+                const value = postalCodeAutoFormat(event.target.value)
+                pushToState(value)
+                break;
+            default: {
+                const value = event.target.value;
+                pushToState(value)
+                break;
+            }
+        }
     }
 
     handleSubmit(event) {
@@ -49,7 +83,6 @@ class FormPage extends React.Component {
         this.setState({
             validated: true
         });
-        console.log(form.checkValidity())
     }
 
     handleClose() {
@@ -66,26 +99,26 @@ class FormPage extends React.Component {
             zip: this.state.zip,
             value: this.state.value,
             phone: this.state.phone,
-            phone2: this.state.phone2,
             email: this.state.email,
             pesel: this.state.pesel,
             nip: this.state.nip,
         }
         return (
-            <div className='container d-flex justify-content-center'>
-                <div className='col-10 p-5'>
+            <div className='d-flex justify-content-center align-items-center h-100'>
+                <div>
 
-                    <Form className='d-flex flex-column' noValidate validated={this.state.validated} onSubmit={this.handleSubmit.bind(this)}>
+                    <Form className='d-flex flex-column form' noValidate validated={this.state.validated} onSubmit={this.handleSubmit.bind(this)}>
                         <Select
                             sendSelected={this.selectedData = (val) => { this.setState({ selected: val, pesel: '', nip: '' }) }}
                         />
-                        <Form.Group className="mb-3" controlId="formBasicPhone">
+                        <Form.Group className="" controlId="formBasicPhone">
                             <FloatingLabel
                                 controlId="floatingInput"
                                 label={this.state.selected === 'option1' ? 'Imię i nazwisko' : 'Nazwa firmy'}
-                                className="mb-3"
+                                className="pb-3"
                             >
                                 <Form.Control
+                                    size="lg"
                                     type="text"
                                     value={this.state.name}
                                     name="name"
@@ -93,6 +126,9 @@ class FormPage extends React.Component {
                                     onChange={this.handleChange.bind(this)}
                                     required
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    Wpisz imię i nazwisko
+                                </Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>
                         <div className="d-flex flex-row">
@@ -111,6 +147,9 @@ class FormPage extends React.Component {
                                             onChange={this.handleChange.bind(this)}
                                             required
                                         />
+                                        <Form.Control.Feedback type="invalid">
+                                            Wpisz ulicę
+                                        </Form.Control.Feedback>
                                     </FloatingLabel>
                                 </Form.Group>
                             </div>
@@ -129,6 +168,9 @@ class FormPage extends React.Component {
                                             onChange={this.handleChange.bind(this)}
                                             required
                                         />
+                                        <Form.Control.Feedback type="invalid">
+                                            Wpisz nr. domu
+                                        </Form.Control.Feedback>
                                     </FloatingLabel>
                                 </Form.Group>
                             </div>
@@ -149,6 +191,9 @@ class FormPage extends React.Component {
                                             onChange={this.handleChange.bind(this)}
                                             required
                                         />
+                                        <Form.Control.Feedback type="invalid">
+                                            Wpisz nazwę miejscowości
+                                        </Form.Control.Feedback>
                                     </FloatingLabel>
                                 </Form.Group>
                             </div>
@@ -165,8 +210,13 @@ class FormPage extends React.Component {
                                             name="zip"
                                             placeholder="Kod pocztowy"
                                             onChange={this.handleChange.bind(this)}
+                                            minLength="6"
+                                            maxLength="6"
                                             required
                                         />
+                                        <Form.Control.Feedback type="invalid">
+                                            Wpisz poprawny kod pocztowy (5 cyfr)
+                                        </Form.Control.Feedback>
                                     </FloatingLabel>
                                 </Form.Group>
                             </div>
@@ -182,13 +232,18 @@ class FormPage extends React.Component {
                                 className="mb-3"
                             >
                                 <Form.Control
-                                    type="tel"
+                                    type="text"
                                     value={this.state.phone}
                                     name="phone"
                                     placeholder="Nr. Telefonu"
                                     onChange={this.handleChange.bind(this)}
+                                    minLength="9"
+                                    maxLength="12"
                                     required
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    Wpisz poprawny numer telefonu
+                                </Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -204,6 +259,9 @@ class FormPage extends React.Component {
                                     onChange={this.handleChange.bind(this)}
                                     required
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    Wpisz poprawny adres e-mail (W formacie example@mail.com)
+                                </Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -216,13 +274,18 @@ class FormPage extends React.Component {
                                         className="mb-3"
                                     >
                                         <Form.Control
-                                            type="text"
+                                            type="tel"
                                             placeholder="Wprowadź PESEL"
                                             name="pesel"
                                             onChange={this.handleChange.bind(this)}
                                             value={this.state.pesel}
+                                            minLength="11"
+                                            maxLength="11"
                                             required
                                         />
+                                        <Form.Control.Feedback type="invalid">
+                                            Wpisz poprawny numer PESEL (12 cyfr)
+                                        </Form.Control.Feedback>
                                     </FloatingLabel>
                                 </>
                                 :
@@ -233,25 +296,38 @@ class FormPage extends React.Component {
                                         className="mb-3"
                                     >
                                         <Form.Control
-                                            type="text"
+                                            type="tel"
                                             placeholder="Wprowadź NIP"
                                             name="nip"
                                             onChange={this.handleChange.bind(this)}
                                             value={this.state.nip}
+                                            minLength="10"
+                                            maxLength="10"
                                             required
                                         />
+                                        <Form.Control.Feedback type="invalid">
+                                            Wpisz poprawny numer NIP (10 cyfr)
+                                        </Form.Control.Feedback>
                                     </FloatingLabel>
                                 </>
                             }
                         </Form.Group>
-                        <Button
-                            className='align-self-end'
-                            type="submit"
-                            value="Zapisz"
-                            disabled={this.state.clicked ? false : true}
-                        >
-                            Zapisz
-                        </Button>
+                        <div className="d-flex flex-row justify-content-end">
+                            <Button
+                                variant="danger"
+                                className='me-2'
+                                onClick={this.handleErase.bind(this)}
+                            >
+                                Wyczyść
+                            </Button>
+                            <Button
+                                type="submit"
+                                value="Zapisz"
+                            // disabled={this.state.clicked ? false : true}
+                            >
+                                Zapisz
+                            </Button>
+                        </div>
                         <ModalWindow
                             show={this.state.show}
                             onHide={this.handleClose.bind(this)}
