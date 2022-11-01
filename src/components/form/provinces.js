@@ -48,9 +48,9 @@ class Provinces extends React.Component {
                             onClick={this.handleClick.bind(this)}
                             required
                         >
-                            <option defaultValue={this.state.province}></option>
+                            <option defaultValue={this.state.province} hidden></option>
                             {this.state.provinces.map((province, i) => (
-                                <option key={i} value={province}>{province}</option>
+                                <option key={i} value={province}>{province.charAt(0).toUpperCase() + province.slice(1)}</option>
                             ))}
                         </Form.Select>
                         <Form.Control.Feedback type="invalid">
