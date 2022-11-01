@@ -20,4 +20,5 @@ https://zadanienazwa.herokuapp.com/
 
 ### Sklonuj projekt 
 ### Przejdź do projektu w terminalu 
+### Zainstaluj wymagane paczki `npm install`
 ### użyj skryptu `npm start`
