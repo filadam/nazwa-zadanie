@@ -5,7 +5,8 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 class Provinces extends React.Component {
     state = {
         provinces: [],
-        clicked: false
+        clicked: false,
+        province: ''
     }
 
     componentDidMount() {
@@ -37,22 +38,24 @@ class Provinces extends React.Component {
     render() {
         return (
             <>
-                <Form.Group className="mb-3" controlId="formBasicPhone">
+                <Form.Group className="mb-2">
                     <FloatingLabel
                         controlId="floatingInput"
                         label="Województwo"
-                        className="mb-3"
                     >
                         <Form.Select
                             onChange={this.handleChange.bind(this)}
                             onClick={this.handleClick.bind(this)}
                             required
                         >
-                            <option value="" style={{ display: "none" }}></option>
+                            <option defaultValue={this.state.province}></option>
                             {this.state.provinces.map((province, i) => (
                                 <option key={i} value={province}>{province}</option>
                             ))}
                         </Form.Select>
+                        <Form.Control.Feedback type="invalid">
+                            Wybierz Województwo
+                        </Form.Control.Feedback>
                     </FloatingLabel>
                 </Form.Group>
             </>

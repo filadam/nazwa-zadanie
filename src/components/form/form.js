@@ -6,18 +6,17 @@ import ModalWindow from "./modal"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import { postalCodeAutoFormat } from './utils/index'
+import { postalCodeAutoFormat, phoneNumberAutoFormat } from './utils/index'
 
 class FormPage extends React.Component {
-
     state = {
         selected: 'option1',
         name: '',
         street: '',
         number: '',
         place: '',
-        zip: '',
-        value: '',
+        postal: '',
+        province: '',
         phone: '',
         email: '',
         pesel: '',
@@ -25,27 +24,6 @@ class FormPage extends React.Component {
         clicked: false,
         show: false,
         validated: false,
-    }
-
-    handleErase() {
-        delete this.state.value
-        this.setState({
-            selected: 'option1',
-            name: '',
-            street: '',
-            number: '',
-            place: '',
-            zip: '',
-            value: '',
-            phone: '',
-            email: '',
-            pesel: '',
-            nip: '',
-            clicked: false,
-            show: false,
-            validated: false,
-        })
-        console.log(this.state)
     }
 
     handleChange(event) {
@@ -56,9 +34,13 @@ class FormPage extends React.Component {
             })
         }
         switch (event.target.name) {
-            case "zip":
-                const value = postalCodeAutoFormat(event.target.value)
-                pushToState(value)
+            case "postal":
+                const postalValue = postalCodeAutoFormat(event.target.value)
+                pushToState(postalValue)
+                break;
+            case "phone":
+                const phoneValue = phoneNumberAutoFormat(event.target.value)
+                pushToState(phoneValue)
                 break;
             default: {
                 const value = event.target.value;
@@ -89,14 +71,35 @@ class FormPage extends React.Component {
             show: false
         })
     }
+
+    handleErase() {
+        this.setState({
+            selected: 'option1',
+            name: '',
+            street: '',
+            number: '',
+            place: '',
+            postal: '',
+            phone: '',
+            email: '',
+            pesel: '',
+            nip: '',
+            province: '',
+            clicked: false,
+            show: false,
+            validated: false,
+        })
+        console.log(this.state)
+    }
+
     render() {
         const multipleProps = {
             name: this.state.name,
             street: this.state.street,
             number: this.state.number,
             place: this.state.place,
-            zip: this.state.zip,
-            value: this.state.value,
+            postal: this.state.postal,
+            province: this.state.province,
             phone: this.state.phone,
             email: this.state.email,
             pesel: this.state.pesel,
@@ -105,7 +108,7 @@ class FormPage extends React.Component {
         return (
             <div className='d-flex justify-content-center align-items-center h-100'>
                 <div className="form-wrapper">
-                    <h1>Siemanko!</h1>
+                    <h1>Hej!</h1>
                     <p>Oto formularz rejestracyjny zrobiony na potrzeby zadania technicznego dla nazwa.pl!</p>
                     <Form className='d-flex flex-column form' noValidate validated={this.state.validated} onSubmit={this.handleSubmit.bind(this)}>
                         <Select
@@ -115,7 +118,7 @@ class FormPage extends React.Component {
                             <FloatingLabel
                                 controlId="floatingInput"
                                 label={this.state.selected === 'option1' ? 'Imię i nazwisko' : 'Nazwa firmy'}
-                                className="pb-3"
+                                className="mb-2"
                             >
                                 <Form.Control
                                     size="lg"
@@ -131,13 +134,12 @@ class FormPage extends React.Component {
                                 </Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>
-                        <div className="d-flex flex-row">
-                            <div className="col-8 pe-2">
-                                <Form.Group className="mb-3" controlId="formBasicPhone">
+                        <div className="d-flex flex-md-row flex-column">
+                            <div className="col-md-8 pe-md-2">
+                                <Form.Group className="mb-2" controlId="formBasicPhone">
                                     <FloatingLabel
                                         controlId="floatingInput"
                                         label="Ulica"
-                                        className="mb-3"
                                     >
                                         <Form.Control
                                             type="text"
@@ -154,11 +156,10 @@ class FormPage extends React.Component {
                                 </Form.Group>
                             </div>
                             <div className="col">
-                                <Form.Group className="mb-3" controlId="formBasicPhone">
+                                <Form.Group className="mb-2" controlId="formBasicPhone">
                                     <FloatingLabel
                                         controlId="floatingInput"
                                         label="Nr. domu"
-                                        className="mb-3"
                                     >
                                         <Form.Control
                                             type="text"
@@ -175,13 +176,12 @@ class FormPage extends React.Component {
                                 </Form.Group>
                             </div>
                         </div>
-                        <div className="d-flex flex-row">
-                            <div className="col-8 pe-2">
-                                <Form.Group className="mb-3" controlId="formBasicPhone">
+                        <div className="d-flex flex-md-row flex-column">
+                            <div className="col-md-8 pe-md-2">
+                                <Form.Group className="mb-2" controlId="formBasicPhone">
                                     <FloatingLabel
                                         controlId="floatingInput"
                                         label="Miejscowość"
-                                        className="mb-3"
                                     >
                                         <Form.Control
                                             type="text"
@@ -198,16 +198,15 @@ class FormPage extends React.Component {
                                 </Form.Group>
                             </div>
                             <div className="col">
-                                <Form.Group className="mb-3" controlId="formBasicPhone">
+                                <Form.Group className="mb-2" controlId="formBasicPhone">
                                     <FloatingLabel
                                         controlId="floatingInput"
                                         label="Kod pocztowy"
-                                        className="mb-3"
                                     >
                                         <Form.Control
                                             type="text"
-                                            value={this.state.zip}
-                                            name="zip"
+                                            value={this.state.postal}
+                                            name="postal"
                                             placeholder="Kod pocztowy"
                                             onChange={this.handleChange.bind(this)}
                                             minLength="6"
@@ -215,21 +214,20 @@ class FormPage extends React.Component {
                                             required
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            Wpisz poprawny kod pocztowy (5 cyfr)
+                                            Wpisz poprawny kod pocztowy
                                         </Form.Control.Feedback>
                                     </FloatingLabel>
                                 </Form.Group>
                             </div>
                         </div>
                         <Provinces
-                            sendData={this.provinceData = (val) => { this.setState({ value: val }); }}
+                            sendData={this.provinceData = (val) => { this.setState({ province: val }); }}
                             checkClicked={this.clickedData = (val) => { this.setState({ clicked: val }) }}
                         />
-                        <Form.Group className="mb-3" controlId="formBasicPhone">
+                        <Form.Group className="mb-2" controlId="formBasicPhone">
                             <FloatingLabel
                                 controlId="floatingInput"
                                 label="Nr. Telefonu"
-                                className="mb-3"
                             >
                                 <Form.Control
                                     type="text"
@@ -237,8 +235,8 @@ class FormPage extends React.Component {
                                     name="phone"
                                     placeholder="Nr. Telefonu"
                                     onChange={this.handleChange.bind(this)}
-                                    minLength="9"
-                                    maxLength="12"
+                                    minLength="11"
+                                    maxLength="11"
                                     required
                                 />
                                 <Form.Control.Feedback type="invalid">
@@ -246,32 +244,31 @@ class FormPage extends React.Component {
                                 </Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-2" controlId="formBasicEmail">
                             <FloatingLabel
                                 controlId="floatingInput"
                                 label="Adres e-mail"
-                                className="mb-3"
                             >
                                 <Form.Control
                                     type="email"
                                     name="email"
+                                    value={this.state.email}
                                     placeholder="Wprowadź email"
                                     onChange={this.handleChange.bind(this)}
                                     required
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    Wpisz poprawny adres e-mail (W formacie example@mail.com)
+                                    Wpisz poprawny adres e-mail
                                 </Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-2" controlId="formBasicEmail">
                             {this.state.selected === 'option1'
                                 ?
                                 <>
                                     <FloatingLabel
                                         controlId="floatingInput"
                                         label="PESEL"
-                                        className="mb-3"
                                     >
                                         <Form.Control
                                             type="tel"
@@ -284,7 +281,7 @@ class FormPage extends React.Component {
                                             required
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            Wpisz poprawny numer PESEL (12 cyfr)
+                                            Wpisz poprawny numer PESEL
                                         </Form.Control.Feedback>
                                     </FloatingLabel>
                                 </>
@@ -293,7 +290,6 @@ class FormPage extends React.Component {
                                     <FloatingLabel
                                         controlId="floatingInput"
                                         label="NIP"
-                                        className="mb-3"
                                     >
                                         <Form.Control
                                             type="tel"
@@ -306,7 +302,7 @@ class FormPage extends React.Component {
                                             required
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            Wpisz poprawny numer NIP (10 cyfr)
+                                            Wpisz poprawny numer NIP
                                         </Form.Control.Feedback>
                                     </FloatingLabel>
                                 </>
