@@ -13,8 +13,3 @@ export const phoneNumberAutoFormat = (phoneNumber) => {
     if (number.length < 11) return number.replace(/(\d{3})(\d{3})(\d{1})/, "$1-$2-$3");
     return number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
 };
-
-export const validateEmail = (email) => {
-    const testRegex =  /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-    return testRegex.test(email)
-}

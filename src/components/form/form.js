@@ -6,7 +6,8 @@ import ModalWindow from "./modal"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import { postalCodeAutoFormat, phoneNumberAutoFormat } from './utils/index'
+import { postalCodeAutoFormat, phoneNumberAutoFormat } from '../utils/index'
+
 
 class FormPage extends React.Component {
     state = {
@@ -24,6 +25,18 @@ class FormPage extends React.Component {
         clicked: false,
         show: false,
         validated: false,
+        errors: {
+            email: ''
+        }
+    }
+
+    costam() {
+        let element = document.querySelector("invalid-feedback")
+        let style = window.getComputedStyle(element);
+
+        if (style.getPropertyValue("display") === "block") {
+            console.log('yes')
+        }
     }
 
     handleChange(event) {
@@ -89,7 +102,6 @@ class FormPage extends React.Component {
             show: false,
             validated: false,
         })
-        console.log(this.state)
     }
 
     render() {
@@ -253,13 +265,16 @@ class FormPage extends React.Component {
                                     type="email"
                                     name="email"
                                     value={this.state.email}
+                                    pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
                                     placeholder="Wprowadź email"
                                     onChange={this.handleChange.bind(this)}
                                     required
                                 />
-                                <Form.Control.Feedback type="invalid">
+                               
+                                    <Form.Control.Feedback type="invalid">
                                     Wpisz poprawny adres e-mail
-                                </Form.Control.Feedback>
+                                    </Form.Control.Feedback>
+                                
                             </FloatingLabel>
                         </Form.Group>
                         <Form.Group className="mb-2" controlId="formBasicEmail">
