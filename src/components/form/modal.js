@@ -6,7 +6,7 @@ function ModalWindow({ show, onHide, onClose, formProps }) {
     return (
         <Modal show={show} onHide={onHide} centered>
             <Modal.Header closeButton>
-                <Modal.Title>Twoje dane:</Modal.Title>
+                <Modal.Title><h1>Twoje dane:</h1></Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className="d-flex flex-row">
@@ -14,7 +14,7 @@ function ModalWindow({ show, onHide, onClose, formProps }) {
                         <p>Imię i nazwisko:</p>
                     </div>
                     <div class="col">
-                        {formProps.name}
+                        <p>{formProps.name}</p>
                     </div>
                 </div>
                 <div className="d-flex flex-row">
@@ -22,7 +22,7 @@ function ModalWindow({ show, onHide, onClose, formProps }) {
                         <p>Adres:</p>
                     </div>
                     <div class="col">
-                        {formProps.street + formProps.number}
+                        <p>{formProps.street + formProps.number}</p>
                     </div>
                 </div>
                 <div className="d-flex flex-row">
@@ -30,7 +30,7 @@ function ModalWindow({ show, onHide, onClose, formProps }) {
                         <p>Adres cd.:</p>
                     </div>
                     <div class="col">
-                        {formProps.province.charAt(0).toUpperCase() + formProps.province.slice(1) + ", " + formProps.place + " " + formProps.postal}
+                        <p>{formProps.province.charAt(0).toUpperCase() + formProps.province.slice(1) + ", " + formProps.place + " " + formProps.postal}</p>
                     </div>
                 </div>
                 <div className="d-flex flex-row">
@@ -38,7 +38,7 @@ function ModalWindow({ show, onHide, onClose, formProps }) {
                         <p>Telefon:</p>
                     </div>
                     <div class="col">
-                        {formProps.phone}
+                        <p>{formProps.phone}</p>
                     </div>
                 </div>
                 <div className="d-flex flex-row">
@@ -46,15 +46,15 @@ function ModalWindow({ show, onHide, onClose, formProps }) {
                         <p>E-mail:</p>
                     </div>
                     <div class="col">
-                        {formProps.email}
+                        <p>{formProps.email}</p>
                     </div>
                 </div>
                 <div className="d-flex flex-row">
                     <div class="col">
-                        <p>{formProps.pesel === '' ? 'Nip: ' : 'Pesel: '} </p>
+                        <p>{formProps.pesel === '' ? 'Nip:' : 'Pesel:'}</p>
                     </div>
                     <div class="col">
-                        {formProps.pesel === '' ? formProps.nip : formProps.pesel}
+                        <p>{formProps.pesel === '' ? formProps.nip : formProps.pesel}</p>
                     </div>
                 </div>
             </Modal.Body>

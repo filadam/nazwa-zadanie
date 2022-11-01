@@ -5,6 +5,31 @@
     margin: 30px;
     background-color: $background-primary;
     border-radius: 30px;
+    border: solid 3px rgb(0, 0, 0);
+
+    .form-check-input:checked {
+        background-color: $accent-color;
+        border-color: $accent-color;
+    }
+
+    .form-check-input.is-valid:checked,
+    .was-validated .form-check-input:valid:checked {
+        background-color: $accent-color;
+    }
+
+    .form-check-input:focus {
+        box-shadow: 0 0 0 0.25rem $blurred-accent-color;
+    }
+
+    .was-validated .form-check-input:valid:focus {
+        box-shadow: 0 0 0 0.25rem $blurred-accent-color;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        // opacity: 0.25;
+        box-shadow: 0 0 0 0.25rem $blurred-accent-color;
+    }
 
     h1 {
         font-weight: $fw-bold;
@@ -35,4 +60,53 @@
             border: 2px solid #000000
         }
     }
-} 
+}
+
+.modal-content {
+    border: solid 3px #000000;
+    outline: 0;
+}
+
+.modal-title {
+    h1 {
+        font-size: calc($base-font-size * 1.2);
+        font-weight: $fw-bold;
+        text-transform: uppercase;
+    }
+}
+
+.modal-body {
+
+    p {
+        font-size: calc($base-font-size / 1.2);
+    }
+}
+
+.btn-primary {
+    background-color: $accent-color !important;
+    font-size: calc($base-font-size / 1.2);
+    font-weight: $fw-bold;
+    border: 2px solid $background-secondary
+}
+
+.btn-danger {
+    background-color: $secondary-accent-color !important;
+    font-size: calc($base-font-size / 1.2);
+    font-weight: $fw-bold;
+    border: 2px solid $background-secondary
+}
+
+.btn:active {
+    border-color: $blurred-accent-color !important;
+}
+
+.btn-primary:hover {
+    border-color: $accent-color !important;
+}
+.btn-danger:hover {
+    border-color: $secondary-accent-color !important;
+}
+
+.btn-close:focus {
+    box-shadow: 0 0 0 0.25rem $blurred-accent-color;
+}
