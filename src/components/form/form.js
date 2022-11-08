@@ -30,15 +30,6 @@ class FormPage extends React.Component {
         }
     }
 
-    costam() {
-        let element = document.querySelector("invalid-feedback")
-        let style = window.getComputedStyle(element);
-
-        if (style.getPropertyValue("display") === "block") {
-            console.log('yes')
-        }
-    }
-
     handleChange(event) {
         const pushToState = (value) => {
             this.setState({
